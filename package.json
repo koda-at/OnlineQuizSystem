@@ -1,0 +1,8 @@
+{
+  "name": "quiz-studio-e2e",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Optional browser smoke tests for the Blazor application",
+  "scripts": { "test": "node tests/e2e/smoke.cjs" },
+  "devDependencies": { "playwright": "1.62.1" }
+}
