@@ -1,161 +1,114 @@
-# Online Quiz System · Quiz Studio
+Online Quiz System · Quiz Studio
+A complete educational web project built with C# / .NET 10 / ASP.NET Core / Blazor Interactive Server / Entity Framework Core / SQLite / ASP.NET Core Identity.
 
-Готовый учебный веб-проект на **C# / .NET 10 / ASP.NET Core / Blazor Interactive Server / Entity Framework Core / SQLite / ASP.NET Core Identity**.
-
-Интерфейс на английском, инструкция на русском. Проект запускается локально; отдельный сервер базы данных, API-ключи и платные сервисы не нужны. При первом запуске загружаются NuGet-пакеты, создаются таблицы и демонстрационные данные. После восстановления зависимостей приложение не использует внешние CDN, шрифты или облачные API.
-
-## Быстрый запуск в Windows
-
-1. Установи **.NET 10 SDK**: https://dotnet.microsoft.com/en-us/download/dotnet/10.0. Нужен именно SDK, не только Runtime.
-2. Распакуй **весь** архив, например в `C:\Projects\OnlineQuizSystem`. Не запускай файлы прямо из ZIP.
-3. Запусти `START_WINDOWS.cmd`.
-4. Когда появится `Now listening on`, открой **http://localhost:5080**.
-5. Войди под Student, Teacher или Admin из таблицы ниже.
-6. Оставь окно терминала открытым. Для остановки нажми **Ctrl+C**.
-
-Из терминала в папке, где находится `OnlineQuizSystem.sln`:
-
-```powershell
+The user interface and these instructions are in English. The project runs locally; no separate database server, API keys, or paid services are required. On the first launch, the application restores NuGet packages, creates the database tables, and seeds demo data. Once dependencies have been restored, the application does not rely on external CDNs, fonts, or cloud APIs.
+Quick Start on Windows
+1. Install the .NET 10 SDK: https://dotnet.microsoft.com/en-us/download/dotnet/10.0. You need the SDK, not just the Runtime.
+2. Extract the entire ZIP archive, for example to C:\Projects\OnlineQuizSystem. Do not run files directly from inside the ZIP.
+3. Run START_WINDOWS.cmd.
+4. When you see Now listening on, open http://localhost:5080.
+5. Sign in using one of the Student, Teacher, or Admin accounts listed below.
+6. Keep the terminal window open. To stop the application, press Ctrl+C.
+Alternatively, open a terminal in the folder containing OnlineQuizSystem.sln and run:
 dotnet restore OnlineQuizSystem.sln
 dotnet run --project src/OnlineQuizSystem --launch-profile OnlineQuizSystem
-```
-
-Первый запуск требует интернет для восстановления NuGet-пакетов. Готовый .NET SDK не включён в ZIP.
-
-## Запуск в Visual Studio
-
-1. Используй **Visual Studio 2026** с поддержкой .NET 10 и компонентом **ASP.NET and web development**. Для Visual Studio 2022 этот Target Framework не подходит; через установленный .NET 10 SDK можно запускать из VS Code или терминала.
-2. Открой `OnlineQuizSystem.sln`.
-3. Выбери проект **OnlineQuizSystem** в `src` как **Startup Project**.
-4. Дождись восстановления NuGet.
-5. Выбери профиль `OnlineQuizSystem` и нажми **Ctrl+F5**.
-6. Открой http://localhost:5080, если браузер не открылся автоматически.
-
-## macOS / Linux / VS Code
-
-Установи .NET 10 SDK, затем в корне проекта:
-
-```bash
+An internet connection is required on the first launch to restore NuGet packages. The .NET SDK itself is not included in the ZIP archive.
+Running in Visual Studio
+1. Use Visual Studio 2026 with .NET 10 support and the ASP.NET and web development workload. Visual Studio 2022 does not support this target framework; you can instead run the project from VS Code or a terminal with the .NET 10 SDK installed.
+2. Open OnlineQuizSystem.sln.
+3. Set the OnlineQuizSystem project under src as the Startup Project.
+4. Wait for NuGet packages to be restored.
+5. Select the OnlineQuizSystem launch profile and press Ctrl+F5.
+6. If the browser does not open automatically, go to http://localhost:5080.
+macOS / Linux / VS Code
+Install the .NET 10 SDK, then run these commands from the project root:
 dotnet restore OnlineQuizSystem.sln
 dotnet run --project src/OnlineQuizSystem --launch-profile OnlineQuizSystem
-# либо: bash start.sh
-```
+# Alternatively: bash start.sh
+Open http://localhost:5080. The project requires .NET SDK version 10.0.100 or later within the 10.0 release series; global.json allows later feature bands within that series. The C# extension for VS Code is optional for running the application.
+Demo Accounts
+Role	Email	Password	What to Test
+Student	student@quiz.local	Student123!	Quizzes, attempt history, leaderboard, topic analysis
+Teacher	teacher@quiz.local	Teacher123!	Own quizzes, questions, results, CSV export
+Admin	admin@quiz.local	Admin123!	All quizzes and overall statistics
 
-Открой http://localhost:5080. Нужна версия SDK 10.0.100 или новее в ветке 10.0; `global.json` разрешает последующие feature bands этой ветки. C# расширение для VS Code необязательно для запуска.
 
-## Демонстрационные аккаунты
+Additional student accounts for the leaderboard: dana@quiz.local and amina@quiz.local, both with the password Student123!.
 
-| Роль | Email | Пароль | Что проверить |
-|---|---|---|---|
-| Student | `student@quiz.local` | `Student123!` | Тесты, история, рейтинг, анализ тем |
-| Teacher | `teacher@quiz.local` | `Teacher123!` | Собственные тесты, вопросы, результаты, CSV |
-| Admin | `admin@quiz.local` | `Admin123!` | Все тесты и общая статистика |
+Public registration always creates a Student account. Users cannot assign themselves the Teacher or Admin role during registration. The demo data includes three published quizzes with 10 questions each: Computer Networks, Database Essentials, and C# & .NET Fundamentals. It also includes nine completed demo attempts. All demo accounts and results are created only when the application runs in Development and Demo:Enabled=true. Existing quizzes are not overwritten on subsequent launches.
+Implemented Features
+- User registration with validation, sign-in, and sign-out using ASP.NET Core Identity; password hashing, cookies, roles, lockout after five failed sign-in attempts, and rate limiting for sign-in and registration requests.
+- Student dashboard and quiz catalog with search, subject filters, and pagination.
+- Quiz creation, editing, publishing, and archiving; four answer options per question, single or multiple correct answers, question topics, and explanations.
+- Role-based permissions: students cannot manage quizzes; teachers can manage their own quizzes and results; admins can manage all quizzes and results.
+- Server-side timer, automatic saving of each answer selection to SQLite, question navigation, and resuming an attempt after a page reload.
+- Automatic submission when the deadline expires, even if the browser tab is closed: a background task checks overdue attempts every 15 seconds. An attempt is also checked immediately when opened. If the server is offline, the attempt is finalized after the server restarts, while its recorded completion time remains the original deadline.
+- Automatic grading, review of correct and incorrect answers, and explanations after submission. Answer keys are not included in the DTO for an active attempt before submission.
+- Account-specific attempt history, retakes, a leaderboard based on each student's best score for each unique quiz, weak-topic analysis, and a chart of the last eight results.
+- Administrative statistics and CSV export. CSV content is escaped, including protection against spreadsheet-formula injection in names and titles.
+- Randomized question order, light and dark themes with saved preferences, and responsive styling.
+- Question snapshots for each attempt: editing a quiz does not change attempts that have already started or finished. Archiving preserves history.
+- Server-side ownership checks and protection against duplicate submissions and edit conflicts across multiple browser tabs.
+How to Use the Application
+Student: Sign in → Explore quizzes → Select a quiz card → Start or resume quiz → Select answers → Next/Previous → Submit quiz → Submit answers → Review the results. Closing the page does not pause the timer. Attempt history is available under My attempts, and rankings are available under Leaderboard.
 
-Дополнительные студенты для рейтинга: `dana@quiz.local` и `amina@quiz.local`, пароль `Student123!`.
+Teacher: Sign in as Teacher → Manage quizzes → Create quiz → Enter the title, subject, description, time limit, and passing percentage → Add questions with four distinct answer options → Mark the correct option(s) → Enable Multiple correct answers, if needed → Select Publish in the student catalog → Save quiz. After students complete quizzes, open Class insights and use Export CSV.
 
-Публичная регистрация всегда создаёт **Student**. Выбрать себе Teacher/Admin при регистрации нельзя. Demo создаёт 3 опубликованных теста по 10 вопросов: Computer Networks, Database Essentials и C# & .NET Fundamentals; также 9 демонстрационных завершённых попыток. Все демонстрационные аккаунты и результаты создаются только при `Development` и `Demo:Enabled=true`. После первого запуска существующие тесты не перезаписываются.
+For multiple-answer questions, one point is awarded only when the student selects all and only the correct options. No partial credit is given. All questions have equal weight. An unanswered question earns zero points. The percentage score is displayed to two decimal places. The pass threshold is evaluated using the exact ratio of correct answers to the total number of questions before rounding.
+Data Storage
+The application database is stored at src/OnlineQuizSystem/App_Data/quiz.db. Enabled Entity Framework Core migrations create the database on first launch. The database file is not included in the archive; accounts and demo results are generated when the application starts.
 
-## Что реализовано
-
-- Регистрация с валидацией, вход и выход через Identity; хеширование паролей, cookies, роли, блокировка после 5 неудачных попыток и ограничение частоты запросов входа/регистрации.
-- Кабинет студента, каталог с поиском, фильтрацией по предмету и постраничным выводом.
-- Создание, редактирование, публикация и архивирование тестов; четыре варианта, один или несколько правильных ответов, тема вопроса и объяснение.
-- Студент не может управлять тестами. Teacher работает со своими тестами и результатами; Admin со всеми.
-- Таймер на сервере, автосохранение каждого выбора в SQLite, переходы между вопросами, возобновление после перезагрузки.
-- Завершение по дедлайну, включая закрытую вкладку: фоновая задача проверяет просроченные попытки каждые 15 секунд. При открытии попытка проверяется сразу. Если сервер выключен, попытка завершится после его запуска; время окончания остаётся равным дедлайну.
-- Автоматическая оценка, разбор правильных/неправильных ответов и объяснений после отправки. До отправки ключи ответов не включаются в DTO активной попытки.
-- История аккаунта, повторные попытки, рейтинг по лучшему результату каждого уникального теста, анализ слабых тем и график последних 8 результатов.
-- Административная статистика и CSV; данные CSV экранируются, включая защиту от формул в именах/названиях.
-- Случайный порядок вопросов, светлая/тёмная тема с сохранением выбора, адаптивные стили.
-- Снимки вопросов для каждой попытки: изменения теста не изменяют начатые/завершённые попытки. Архивирование сохраняет историю.
-- Серверная проверка владельца, защита от повторной отправки и конфликтов редактирования в нескольких вкладках.
-
-## Как пользоваться
-
-**Студент:** Sign in → Explore quizzes → карточка теста → Start or resume quiz → выбрать варианты → Next/Previous → Submit quiz → Submit answers → разбор. Закрытие страницы не останавливает таймер. История находится в My attempts; рейтинг — в Leaderboard.
-
-**Преподаватель:** войти как Teacher → Manage quizzes → Create quiz → заполнить название, предмет, описание, время, проходной процент → добавить вопросы и 4 различных варианта → отметить правильные варианты → при необходимости включить Multiple correct answers → Publish in the student catalog → Save quiz. После прохождения студентами открыть Class insights и Export CSV.
-
-Для multi-select начисляется 1 балл только при выборе **всех и только** правильных вариантов. Частичных баллов нет. Каждый вопрос имеет одинаковый вес. Неотвеченный вопрос даёт 0 баллов. Процент результата отображается до двух знаков. Проходной порог сравнивается по точному отношению правильных ответов к общему числу, до округления.
-
-## Где лежат данные
-
-Рабочая БД: `src/OnlineQuizSystem/App_Data/quiz.db`. Её создают включённые EF Core migrations при первом старте. В архиве БД нет: пользователи и демонстрационные результаты создаются при запуске.
-
-Для резервной копии останови сервер и скопируй всю папку `App_Data`. Для полного сброса учебных данных останови приложение и удали `App_Data`, затем запусти снова. Это удалит все созданные аккаунты, тесты и результаты. Не удаляй папку ради обычного перезапуска.
-
-## Структура
-
-```text
+To back up the database, stop the server and copy the entire App_Data folder. To completely reset the educational data, stop the application, delete App_Data, and start it again. This deletes all created accounts, quizzes, and results. Do not delete the folder for a normal restart.
+Project Structure
 OnlineQuizSystem.sln
 src/OnlineQuizSystem/
-  Components/Pages/       Страницы студента, преподавателя и аккаунта
-  Components/Shared/      QuizCard, QuestionCard, StatCard, HistoryTable, график
-  Components/Layout/      Навигация и общий каркас
-  Models/                 Сущности, DTO и модели редактирования
-  Data/                   DbContext и демонстрационные данные
-  Migrations/             Начальная схема EF Core и snapshot
-  Services/               Тесты, попытки, подсчёт, статистика, авторизация
-  wwwroot/                Локальные CSS, JavaScript и favicon
-  Program.cs              DI, HTTP-вход/выход, middleware, endpoints
- tests/OnlineQuizSystem.Tests/  xUnit, интеграционные и UI-тесты
- tests/e2e/                    Playwright сценарий для настоящего браузера
- docs/                         Архитектура, тест-план и сценарий защиты
-```
-
-## Тестирование
-
-```powershell
+  Components/Pages/       Student, teacher, and account pages
+  Components/Shared/      QuizCard, QuestionCard, StatCard, HistoryTable, chart
+  Components/Layout/      Navigation and shared application layout
+  Models/                 Entities, DTOs, and editing models
+  Data/                   DbContext and demo seed data
+  Migrations/             Initial EF Core schema and model snapshot
+  Services/               Quizzes, attempts, scoring, statistics, authorization
+  wwwroot/                Local CSS, JavaScript, and favicon
+  Program.cs              Dependency injection, HTTP authentication,
+                          middleware, and endpoints
+  tests/OnlineQuizSystem.Tests/  xUnit, integration, and UI tests
+  tests/e2e/                    Playwright real-browser scenario
+  docs/                         Architecture, test plan, and defense guide
+Testing
+Run all .NET tests with:
 dotnet test OnlineQuizSystem.sln
-```
+Automated tests use temporary SQLite databases and do not modify your working database. Test results and documented limitations are in docs/TEST_REPORT.md; manual testing scenarios are in docs/TEST_PLAN.md.
 
-Автотесты используют временные SQLite-базы и не изменяют твою рабочую БД. Результат проверок и честные ограничения находятся в `docs/TEST_REPORT.md`; ручные сценарии — в `docs/TEST_PLAN.md`.
-
-Необязательная проверка браузера требует Node.js и работающего приложения с Demo:
-
-```powershell
+The optional browser test requires Node.js and a running application with demo mode enabled:
 npm install
 npx playwright install chromium
 npm test
-```
-
-В браузерном сценарии используются демо-аккаунты, создаётся и архивируется тест с названием Browser QA Quiz, регистрируется дополнительный тестовый студент и создаётся попытка. Запускай его на учебной/тестовой БД. Для другого адреса задай `QUIZ_BASE_URL`. Сценарий проверяет десктопный и мобильный viewport; это не заменяет проверку на физическом смартфоне.
-
-## Миграции при дальнейшей разработке
-
-Первый запуск не требует команд миграции вручную. После изменения моделей:
-
-```powershell
+The browser test uses demo accounts, creates and archives a quiz named Browser QA Quiz, registers an additional test student, and creates a quiz attempt. Run it against an educational or test database. Set QUIZ_BASE_URL to test a different address. The scenario checks desktop and mobile viewports, but it does not replace testing on a physical smartphone.
+Database Migrations for Further Development
+The initial launch does not require manual migration commands. After changing the data models, run:
 dotnet tool restore
 dotnet tool run dotnet-ef migrations add YourChange --project src/OnlineQuizSystem
 dotnet tool run dotnet-ef database update --project src/OnlineQuizSystem
-```
+Do not combine EnsureCreated with migrations for the working database. EnsureCreated is used only in isolated service tests.
+Limitations of the Educational Version
+The application is designed for a single server process with SQLite. Writes are serialized through a shared MutationGate, making interactions across multiple tabs and background deadline processing predictable. Supporting multiple server instances would require a server-based database, transactional constraints or distributed coordination, and load testing. The project does not claim to have been tested with large classes or heavy workloads.
 
-Не смешивай `EnsureCreated` и миграции на рабочей БД. `EnsureCreated` используется только в изолированных тестах сервисов.
+The application uses Blazor Interactive Server, so interactive features require a running server and an active SignalR connection. An answer successfully submitted before a connection interruption is saved. If saving was not confirmed, reconnect and verify the selected answer. Offline quiz-taking is not implemented.
 
-## Границы учебной версии
+Email-based password reset, email confirmation, role management through the UI, access codes, AI-generated questions, adaptive difficulty, and a dedicated real-time leaderboard hub are not implemented. The leaderboard refreshes when its page is opened. The chart is a custom Blazor/CSS component; Chart.js is not required.
 
-Приложение рассчитано на один серверный процесс и SQLite. Записи сериализуются общим `MutationGate`; это делает работу нескольких вкладок и фонового завершения предсказуемой. Перед несколькими репликами нужны серверная БД, транзакционные ограничения/распределённая координация и нагрузочное тестирование. Проверка больших классов и нагрузочных сценариев не заявляется.
-
-Это Interactive Server: для действий нужен работающий сервер и соединение SignalR. Отправленный до разрыва ответ сохраняется; при неподтверждённом сохранении нужно восстановить соединение и проверить выбор. Офлайн-прохождение не реализовано.
-
-Сброс пароля по email, подтверждение email, управление ролями через UI, коды доступа, AI-генерация, адаптивная сложность и отдельный realtime-hub рейтинга не реализованы. Рейтинг обновляется при открытии страницы. График написан как собственный Blazor/CSS-компонент; Chart.js не требуется.
-
-Для публичного сервера отключи Demo, используй HTTPS и собственный администраторский пароль. Первый администратор создаётся через настройки `Bootstrap:AdminEmail` и `Bootstrap:AdminPassword` (например, через .NET User Secrets при локальной настройке; в хостинге — через менеджер секретов). При Production демо-пароли не создаются независимо от Demo:Enabled. Учётные записи, которые уже существуют в перенесённой БД, автоматически не удаляются: не переноси демонстрационную БД в публичное окружение.
-
-## Что подготовить перед сдачей
-
-- Впиши реальные ФИО, группу и ссылку на свой GitHub в материалы защиты.
-- Изучи сервисы и связи таблиц: на защите преподаватель может спрашивать любую часть.
-- Пройди сценарий `docs/DEFENSE.md` и ручной чек-лист `docs/TEST_PLAN.md`.
-- Подготовь презентацию по структуре из `docs/DEFENSE.md`. В ZIP включён текстовый сценарий, отдельный PPTX не создавался.
-- Коммит исходников в GitHub и отправку в LMS выполняешь под своим аккаунтом; архив готов к загрузке после проверки правил сабмита преподавателя.
-
-## Первичные источники
-
+Before deploying to a public server, disable demo mode, enable HTTPS, and use a unique administrator password. The initial administrator is configured through Bootstrap:AdminEmail and Bootstrap:AdminPassword (for example, with .NET User Secrets during local development or a secrets manager in hosting). Production mode does not create demo passwords, regardless of Demo:Enabled. However, existing accounts in a transferred database are not automatically deleted. Do not move a database containing demo accounts to a public environment.
+Preparation Before Submission
+- Add your real full name, group, and GitHub repository URL to the defense materials.
+- Study the services and database relationships; the instructor may ask about any part of the code.
+- Practice the presentation scenario in docs/DEFENSE.md and complete the manual checklist in docs/TEST_PLAN.md.
+- Prepare a presentation based on the structure in docs/DEFENSE.md. The ZIP includes a text-based defense script, but no separate PPTX presentation was created.
+- Commit the source code to GitHub and submit it to the LMS using your own accounts. The archive is ready for upload after you verify the instructor's submission requirements.
+Primary References
 - .NET SDK: https://dotnet.microsoft.com/en-us/download/dotnet/10.0
 - Blazor: https://learn.microsoft.com/en-us/aspnet/core/blazor/?view=aspnetcore-10.0
-- EF Core в Blazor и DbContextFactory: https://learn.microsoft.com/en-us/aspnet/core/blazor/blazor-ef-core?view=aspnetcore-10.0
+- EF Core in Blazor and DbContextFactory: https://learn.microsoft.com/en-us/aspnet/core/blazor/blazor-ef-core?view=aspnetcore-10.0
 - Identity: https://learn.microsoft.com/en-us/aspnet/core/security/authentication/identity?view=aspnetcore-10.0
 - bUnit: https://bunit.dev/docs/getting-started/writing-tests.html
 - Playwright: https://playwright.dev/docs/library
