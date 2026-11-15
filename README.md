@@ -1,4 +1,3 @@
-<div align="center">
 
 # Quiz Studio
 ### Online Quiz System
@@ -6,18 +5,6 @@
 **A role-based quiz platform for creating, taking, and analyzing online assessments.**
 
 Built with C#, ASP.NET Core, Blazor Interactive Server, Entity Framework Core, and SQLite.
-
-![.NET 10](https://img.shields.io/badge/.NET-10-512BD4?style=flat-square&logo=dotnet&logoColor=white)
-![C%23](https://img.shields.io/badge/C%23-ASP.NET_Core-239120?style=flat-square&logo=dotnet&logoColor=white)
-![Blazor](https://img.shields.io/badge/Blazor-Interactive_Server-512BD4?style=flat-square)
-![SQLite](https://img.shields.io/badge/Database-SQLite-003B57?style=flat-square&logo=sqlite&logoColor=white)
-![License](https://img.shields.io/badge/Project-Educational-lightgrey?style=flat-square)
-
-[Getting Started](#getting-started) · [Features](#key-features) · [Architecture](#architecture) · [Testing](#testing) · [Project Structure](#project-structure)
-
-</div>
-
----
 
 ## Overview
 
